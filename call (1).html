@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chattera — Calls</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --primary: #5b4bdb;
+    --primary-light: #eeeaff;
+    --bg: #f6f7fb;
+    --card: #fff;
+    --text: #17172b;
+    --muted: #85879a;
+    --border: #ececf3;
+    --green: #19a86b;
+    --red: #e25564;
+}
+
+<script src="navigation.js"></script>
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.app {
+    width: 100%;
+    max-width: 600px;
+    min-height: 100vh;
+    margin: auto;
+    padding-bottom: 90px;
+}
+
+/* HEADER */
+.header {
+    height: 70px;
+    padding: 0 18px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.title {
+    flex: 1;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.header-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 13px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 19px;
+    cursor: pointer;
+}
+
+/* SEARCH */
+.search-box {
+    margin: 15px 18px 10px;
+    height: 46px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+}
+
+.search-box span {
+    margin-right: 9px;
+    color: var(--muted);
+}
+
+.search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+}
+
+/* QUICK CALL */
+.quick-call {
+    margin: 15px 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            #887bea
+        );
+
+    border-radius: 20px;
+    padding: 17px;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    box-shadow: 0 8px 25px rgba(91,75,219,.18);
+}
+
+.quick-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
+
+    background: rgba(255,255,255,.18);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+    margin-right: 12px;
+}
+
+.quick-info {
+    flex: 1;
+}
+
+.quick-info strong {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.quick-info span {
+    font-size: 9px;
+    opacity: .8;
+}
+
+.quick-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+
+    background: white;
+    color: var(--primary);
+
+    cursor: pointer;
+    font-size: 17px;
+}
+
+/* SECTION */
+.section {
+    margin: 22px 18px 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+
+    margin: 0 5px 9px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    color: var(--primary);
+    text-transform: uppercase;
+}
+
+.section-title span {
+    margin-left: 6px;
+    min-width: 19px;
+    height: 19px;
+
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--primary-light);
+    font-size: 8px;
+}
+
+/* CALL CARD */
+.call-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 19px;
+    overflow: hidden;
+}
+
+.call-item {
+    min-height: 76px;
+
+    padding: 11px 14px;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid var(--border);
+
+    cursor: pointer;
+}
+
+.call-item:last-child {
+    border-bottom: none;
+}
+
+.call-item:hover {
+    background: rgba(91,75,219,.025);
+}
+
+/* AVATAR */
+.avatar {
+    width: 53px;
+    height: 53px;
+
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+
+    margin-right: 12px;
+
+    flex-shrink: 0;
+}
+
+.purple {
+    background: linear-gradient(135deg,#5b4bdb,#9589ee);
+}
+
+.green {
+    background: linear-gradient(135deg,#159e68,#56ce9b);
+}
+
+.blue {
+    background: linear-gradient(135deg,#3977d1,#7faef0);
+}
+
+.orange {
+    background: linear-gradient(135deg,#db8735,#f0ba70);
+}
+
+.pink {
+    background: linear-gradient(135deg,#d15489,#ef8db5);
+}
+
+/* CALL INFO */
+.call-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.call-info strong {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.call-details {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    color: var(--muted);
+    font-size: 9px;
+}
+
+.call-arrow.incoming {
+    color: var(--green);
+}
+
+.call-arrow.outgoing {
+    color: var(--primary);
+}
+
+.call-arrow.missed {
+    color: var(--red);
+}
+
+/* CALL ACTION */
+.call-action {
+    width: 39px;
+    height: 39px;
+
+    border: none;
+    border-radius: 13px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.call-action.video {
+    margin-left: 6px;
+}
+
+/* EMPTY STATE */
+.empty {
+    display: none;
+
+    text-align: center;
+    padding: 35px 15px;
+
+    color: var(--muted);
+}
+
+.empty-icon {
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 10px;
+
+    border-radius: 18px;
+
+    background: var(--primary-light);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+    max-width: 600px;
+
+    height: 70px;
+
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(15px);
+
+    border-top: 1px solid var(--border);
+
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+
+    z-index: 50;
+}
+
+.nav-item {
+    border: none;
+    background: transparent;
+
+    color: var(--muted);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    font-size: 9px;
+    cursor: pointer;
+}
+
+.nav-icon {
+    font-size: 19px;
+}
+
+.nav-item.active {
+    color: var(--primary);
+}
+
+/* NEW CALL MODAL */
+.modal {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.45);
+
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+
+    z-index: 100;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 600px;
+
+    background: var(--card);
+
+    border-radius: 25px 25px 0 0;
+
+    padding: 20px;
+
+    animation: slideUp .25s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.modal-title {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 18px;
+}
+
+.call-options {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+}
+
+.call-option {
+    padding: 17px 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: var(--bg);
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.call-option-icon {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.call-option strong {
+    font-size: 10px;
+}
+
+.close-btn {
+    width: 100%;
+    height: 44px;
+
+    border: none;
+    border-radius: 13px;
+
+    background: var(--bg);
+    color: var(--muted);
+
+    margin-top: 13px;
+
+    cursor: pointer;
+}
+
+/* CONTACT LIST MODAL */
+.contact-list {
+    max-height: 390px;
+    overflow-y: auto;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+
+    padding: 10px 3px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.contact:last-child {
+    border-bottom: none;
+}
+
+.contact .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 15px;
+    margin-right: 10px;
+}
+
+.contact-name {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.contact-call {
+    width: 37px;
+    height: 37px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+
+    cursor: pointer;
+}
+
+/* DARK MODE */
+body.dark {
+    --bg: #11111b;
+    --card: #191925;
+    --text: #f4f4fa;
+    --muted: #9293a7;
+    --border: #29293a;
+}
+
+body.dark .bottom-nav {
+    background: rgba(25,25,37,.96);
+}
+
+/* RESPONSIVE */
+@media(max-width:380px) {
+    .header {
+        padding: 0 13px;
+    }
+
+    .search-box,
+    .quick-call,
+    .section {
+        margin-left: 13px;
+        margin-right: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="title">
+            Calls
+        </div>
+
+        <button
+            class="header-btn"
+            onclick="openNewCall()">
+
+            ＋
+
+        </button>
+
+    </header>
+
+
+    <!-- SEARCH -->
+    <div class="search-box">
+
+        <span>🔍</span>
+
+        <input
+            id="callSearch"
+            type="search"
+            placeholder="Search calls..."
+            oninput="searchCalls()">
+
+    </div>
+
+
+    <!-- QUICK CALL -->
+    <div class="quick-call">
+
+        <div class="quick-icon">
+            📞
+        </div>
+
+        <div class="quick-info">
+
+            <strong>
+                Start a new call
+            </strong>
+
+            <span>
+                Call your Chattera contacts instantly
+            </span>
+
+        </div>
+
+        <button
+            class="quick-btn"
+            onclick="openNewCall()">
+
+            →
+        </button>
+
+    </div>
+
+
+    <!-- RECENT CALLS -->
+    <section class="section">
+
+        <div class="section-title">
+
+            Recent Calls
+
+            <span id="callCount">
+                6
+            </span>
+
+        </div>
+
+
+        <div
+            class="call-card"
+            id="callList">
+
+
+            <!-- CALL 1 -->
+            <div
+                class="call-item"
+                data-name="Amara Johnson">
+
+                <div class="avatar purple">
+                    AJ
+                </div>
+
+                <div class="call-info">
+
+                    <strong>
+                        Amara Johnson
+                    </strong>
+
+                    <div class="call-details">
+
+                        <span class="call-arrow incoming">
+                            ↙
+                        </span>
+
+                        Incoming · Today, 5:42 PM
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="call-action"
+                    onclick="startVoiceCall('Amara Johnson')">
+
+                    📞
+
+                </button>
+
+                <button
+                    class="call-action video"
+                    onclick="startVideoCall('Amara Johnson')">
+
+                    🎥
+
+                </button>
+
+            </div>
+
+
+            <!-- CALL 2 -->
+            <div
+                class="call-item"
+                data-name="David Emmanuel">
+
+                <div class="avatar blue">
+                    DE
+                </div>
+
+                <div class="call-info">
+
+                    <strong>
+                        David Emmanuel
+                    </strong>
+
+                    <div class="call-details">
+
+                        <span class="call-arrow outgoing">
+                            ↗
+                        </span>
+
+                        Outgoing · Today, 3:18 PM
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="call-action"
+                    onclick="startVoiceCall('David Emmanuel')">
+
+                    📞
+
+                </button>
+
+                <button
+                    class="call-action video"
+                    onclick="startVideoCall('David Emmanuel')">
+
+                    🎥
+
+                </button>
+
+            </div>
+
+
+            <!-- CALL 3 -->
+            <div
+                class="call-item"
+                data-name="Sarah Williams">
+
+                <div class="avatar pink">
+                    SW
+                </div>
+
+                <div class="call-info">
+
+                    <strong>
+                        Sarah Williams
+                    </strong>
+
+                    <div class="call-details">
+
+                        <span class="call-arrow missed">
+                            ↙
+                        </span>
+
+                        Missed · Yesterday, 8:15 PM
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="call-action"
+                    onclick="startVoiceCall('Sarah Williams')">
+
+                    📞
+
+                </button>
+
+                <button
+                    class="call-action video"
+                    onclick="startVideoCall('Sarah Williams')">
+
+                    🎥
+
+                </button>
+
+            </div>
+
+
+            <!-- CALL 4 -->
+            <div
+                class="call-item"
+                data-name="Michael James">
+
+                <div class="avatar green">
+                    MJ
+                </div>
+
+                <div class="call-info">
+
+                    <strong>
+                        Michael James
+                    </strong>
+
+                    <div class="call-details">
+
+                        <span class="call-arrow outgoing">
+                            ↗
+                        </span>
+
+                        Outgoing · Yesterday, 6:31 PM
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="call-action"
+                    onclick="startVoiceCall('Michael James')">
+
+                    📞
+
+                </button>
+
+                <button
+                    class="call-action video"
+                    onclick="startVideoCall('Michael James')">
+
+                    🎥
+
+                </button>
+
+            </div>
+
+
+            <!-- CALL 5 -->
+            <div
+                class="call-item"
+                data-name="Grace Peter">
+
+                <div class="avatar orange">
+                    GP
+                </div>
+
+                <div class="call-info">
+
+                    <strong>
+                        Grace Peter
+                    </strong>
+
+                    <div class="call-details">
+
+                        <span class="call-arrow incoming">
+                            ↙
+                        </span>
+
+                        Incoming · Monday, 2:10 PM
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="call-action"
+                    onclick="startVoiceCall('Grace Peter')">
+
+                    📞
+
+                </button>
+
+                <button
+                    class="call-action video"
+                    onclick="startVideoCall('Grace Peter')">
+
+                    🎥
+
+                </button>
+
+            </div>
+
+
+            <!-- CALL 6 -->
+            <div
+                class="call-item"
+                data-name="Daniel Okoro">
+
+                <div class="avatar blue">
+                    DO
+                </div>
+
+                <div class="call-info">
+
+                    <strong>
+                        Daniel Okoro
+                    </strong>
+
+                    <div class="call-details">
+
+                        <span class="call-arrow missed">
+                            ↙
+                        </span>
+
+                        Missed · Sunday, 10:05 AM
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="call-action"
+                    onclick="startVoiceCall('Daniel Okoro')">
+
+                    📞
+
+                </button>
+
+                <button
+                    class="call-action video"
+                    onclick="startVideoCall('Daniel Okoro')">
+
+                    🎥
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="empty"
+                id="emptyCalls">
+
+                <div class="empty-icon">
+                    📞
+                </div>
+
+                <strong>
+                    No calls found
+                </strong>
+
+                <p style="font-size:9px;margin-top:5px;">
+                    Try another name.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+    <button
+        class="nav-item"
+        onclick="goTo('home')">
+
+        <div class="nav-icon">🏠</div>
+        Home
+
+    </button>
+
+    <button
+        class="nav-item"
+        onclick="goTo('chats')">
+
+        <div class="nav-icon">💬</div>
+        Chats
+
+    </button>
+
+    <button
+        class="nav-item"
+        onclick="goTo('status')">
+
+        <div class="nav-icon">◉</div>
+        Status
+
+    </button>
+
+    <button
+        class="nav-item"
+        onclick="goTo('contacts')">
+
+        <div class="nav-icon">👥</div>
+        Contacts
+
+    </button>
+
+    <button
+        class="nav-item active">
+
+        <div class="nav-icon">📞</div>
+        Calls
+
+    </button>
+
+</nav>
+
+
+<!-- NEW CALL MODAL -->
+<div
+    class="modal"
+    id="newCallModal"
+    onclick="closeModalOutside(event)">
+
+    <div class="modal-content">
+
+        <div class="modal-title">
+            New Call
+        </div>
+
+        <div class="call-options">
+
+            <div
+                class="call-option"
+                onclick="showContacts('voice')">
+
+                <div class="call-option-icon">
+                    📞
+                </div>
+
+                <strong>
+                    Voice Call
+                </strong>
+
+            </div>
+
+            <div
+                class="call-option"
+                onclick="showContacts('video')">
+
+                <div class="call-option-icon">
+                    🎥
+                </div>
+
+                <strong>
+                    Video Call
+                </strong>
+
+            </div>
+
+        </div>
+
+        <button
+            class="close-btn"
+            onclick="closeNewCall()">
+
+            Cancel
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- CONTACT SELECTION MODAL -->
+<div
+    class="modal"
+    id="contactsModal">
+
+    <div class="modal-content">
+
+        <div class="modal-title">
+            Select Contact
+        </div>
+
+        <div class="contact-list">
+
+            <div class="contact">
+
+                <div class="avatar purple">
+                    AJ
+                </div>
+
+                <div class="contact-name">
+                    Amara Johnson
+                </div>
+
+                <button
+                    class="contact-call"
+                    onclick="makeSelectedCall('Amara Johnson')">
+
+                    📞
+
+                </button>
+
+            </div>
+
+            <div class="contact">
+
+                <div class="avatar blue">
+                    DE
+                </div>
+
+                <div class="contact-name">
+                    David Emmanuel
+                </div>
+
+                <button
+                    class="contact-call"
+                    onclick="makeSelectedCall('David Emmanuel')">
+
+                    📞
+
+                </button>
+
+            </div>
+
+            <div class="contact">
+
+                <div class="avatar pink">
+                    SW
+                </div>
+
+                <div class="contact-name">
+                    Sarah Williams
+                </div>
+
+                <button
+                    class="contact-call"
+                    onclick="makeSelectedCall('Sarah Williams')">
+
+                    📞
+
+                </button>
+
+            </div>
+
+            <div class="contact">
+
+                <div class="avatar green">
+                    MJ
+                </div>
+
+                <div class="contact-name">
+                    Michael James
+                </div>
+
+                <button
+                    class="contact-call"
+                    onclick="makeSelectedCall('Michael James')">
+
+                    📞
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <button
+            class="close-btn"
+            onclick="closeContacts()">
+
+            Cancel
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   NEW CALL
+========================= */
+
+let selectedCallType = "voice";
+
+function openNewCall() {
+
+    document
+        .getElementById("newCallModal")
+        .classList.add("show");
+
+}
+
+function closeNewCall() {
+
+    document
+        .getElementById("newCallModal")
+        .classList.remove("show");
+
+}
+
+function closeModalOutside(event) {
+
+    if (
+        event.target.id === "newCallModal"
+    ) {
+
+        closeNewCall();
+
+    }
+
+}
+
+
+/* =========================
+   CONTACT SELECTION
+========================= */
+
+function showContacts(type) {
+
+    selectedCallType = type;
+
+    closeNewCall();
+
+    document
+        .getElementById("contactsModal")
+        .classList.add("show");
+
+}
+
+function closeContacts() {
+
+    document
+        .getElementById("contactsModal")
+        .classList.remove("show");
+
+}
+
+
+/* =========================
+   CALL ACTIONS
+========================= */
+
+function makeSelectedCall(name) {
+
+    closeContacts();
+
+    if (
+        selectedCallType === "video"
+    ) {
+
+        startVideoCall(name);
+
+    } else {
+
+        startVoiceCall(name);
+
+    }
+
+}
+
+function startVoiceCall(name) {
+
+    alert(
+        "Starting voice call with " +
+        name +
+        ".\n\n" +
+        "The WebRTC calling system will be connected here."
+    );
+
+}
+
+function startVideoCall(name) {
+
+    alert(
+        "Starting video call with " +
+        name +
+        ".\n\n" +
+        "The WebRTC video calling system will be connected here."
+    );
+
+}
+
+
+/* =========================
+   SEARCH CALLS
+========================= */
+
+function searchCalls() {
+
+    const query =
+        document
+        .getElementById("callSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const items =
+        document.querySelectorAll(
+            ".call-item"
+        );
+
+    let visible = 0;
+
+    items.forEach(item => {
+
+        const name =
+            (
+                item.dataset.name ||
+                ""
+            ).toLowerCase();
+
+        if (
+            !query ||
+            name.includes(query)
+        ) {
+
+            item.style.display = "flex";
+
+            visible++;
+
+        } else {
+
+            item.style.display = "none";
+
+        }
+
+    });
+
+    document
+        .getElementById("callCount")
+        .textContent = visible;
+
+    document
+        .getElementById("emptyCalls")
+        .style.display =
+        visible === 0
+            ? "block"
+            : "none";
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function goTo(page) {
+
+    const pages = {
+
+        home: "index.html",
+
+        chats: "chats.html",
+
+        status: "status.html",
+
+        contacts: "contacts.html"
+
+    };
+
+    if (pages[page]) {
+
+        window.location.href =
+            pages[page];
+
+    }
+
+}
+
+
+/* =========================
+   ESC KEY
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeNewCall();
+            closeContacts();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
