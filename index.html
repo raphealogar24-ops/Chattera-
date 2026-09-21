@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chattera — Home</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --primary: #5b4bdb;
+    --primary-dark: #4436b8;
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --text: #17172b;
+    --muted: #85879a;
+    --border: #ececf3;
+    --online: #21c47b;
+}
+<button onclick="openCalls()">
+    Test Calls
+</button>
+<script src="navigation.js"></script>
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.app {
+    max-width: 600px;
+    margin: auto;
+    min-height: 100vh;
+    background: var(--bg);
+    padding-bottom: 90px;
+}
+
+/* HEADER */
+.header {
+    background: var(--card);
+    padding: 18px 18px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #6c5ce7, #4936c8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    font-weight: bold;
+    box-shadow: 0 7px 18px rgba(91,75,219,.25);
+}
+
+.brand h1 {
+    font-size: 21px;
+    letter-spacing: -.5px;
+}
+
+.brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f1f1f8;
+    border-radius: 13px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* PROFILE */
+.profile-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 2px solid #eeeaff;
+    border-radius: 50%;
+    overflow: hidden;
+    background: white;
+    cursor: pointer;
+}
+
+.profile-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* WELCOME */
+.welcome {
+    padding: 22px 18px 12px;
+}
+
+.welcome p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.welcome h2 {
+    font-size: 27px;
+    letter-spacing: -.8px;
+}
+
+/* SEARCH */
+.search-box {
+    margin: 8px 18px 18px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    gap: 10px;
+}
+
+.search-box span {
+    color: #9294a4;
+    font-size: 18px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+}
+
+/* QUICK ACTIONS */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 0 18px 20px;
+}
+
+.quick {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 13px 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.quick:active {
+    transform: scale(.95);
+}
+
+.quick-icon {
+    width: 38px;
+    height: 38px;
+    margin: auto;
+    border-radius: 12px;
+    background: #eeeaff;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.quick span {
+    display: block;
+    font-size: 11px;
+    margin-top: 7px;
+    color: #55576a;
+    font-weight: 600;
+}
+
+/* SECTION */
+.section {
+    margin-bottom: 22px;
+}
+
+.section-title {
+    padding: 0 18px 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-title h3 {
+    font-size: 16px;
+}
+
+.section-title a {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* STORIES */
+.stories {
+    display: flex;
+    overflow-x: auto;
+    gap: 13px;
+    padding: 0 18px 4px;
+    scrollbar-width: none;
+}
+
+.stories::-webkit-scrollbar {
+    display: none;
+}
+
+.story {
+    min-width: 66px;
+    text-align: center;
+}
+
+.story-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(135deg, #5b4bdb, #a98cff);
+    margin: auto;
+}
+
+.story-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.story-name {
+    font-size: 10px;
+    margin-top: 6px;
+    color: #55576a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.add-story {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: white;
+    border: 2px dashed #bbb9d7;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    margin: auto;
+}
+
+/* CHAT LIST */
+.chat-list {
+    padding: 0 12px;
+}
+
+.chat {
+    display: flex;
+    align-items: center;
+    padding: 13px 7px;
+    border-radius: 17px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.chat:hover {
+    background: white;
+}
+
+.avatar-wrap {
+    position: relative;
+    margin-right: 12px;
+}
+
+.avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.online {
+    width: 12px;
+    height: 12px;
+    background: var(--online);
+    border: 2px solid white;
+    border-radius: 50%;
+    position: absolute;
+    right: 1px;
+    bottom: 2px;
+}
+
+.chat-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.chat-name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.chat-time {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.chat-message {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 230px;
+}
+
+.unread {
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 600px;
+    height: 72px;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 30;
+}
+
+.nav-item {
+    text-align: center;
+    color: #9293a4;
+    font-size: 10px;
+    cursor: pointer;
+    min-width: 58px;
+}
+
+.nav-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.nav-item.active {
+    color: var(--primary);
+}
+
+/* FLOATING BUTTON */
+.fab {
+    position: fixed;
+    right: calc(50% - 270px);
+    bottom: 88px;
+    width: 54px;
+    height: 54px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #6756e7, #4434bd);
+    color: white;
+    font-size: 25px;
+    box-shadow: 0 10px 25px rgba(69,53,189,.3);
+    cursor: pointer;
+}
+
+@media(max-width: 600px) {
+    .fab {
+        right: 20px;
+    }
+}
+
+/* DARK MODE */
+body.dark {
+    --bg: #11111b;
+    --card: #191925;
+    --text: #f4f4fa;
+    --muted: #9293a7;
+    --border: #29293a;
+}
+
+body.dark .search-box,
+body.dark .quick,
+body.dark .chat:hover,
+body.dark .bottom-nav {
+    background: #191925;
+}
+
+body.dark .icon-btn {
+    background: #272738;
+}
+
+body.dark .profile-btn {
+    background: #191925;
+    border-color: #303044;
+}
+
+body.dark .story-avatar img {
+    border-color: #191925;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="brand">
+            <div class="logo">C</div>
+
+            <div>
+                <h1>Chattera</h1>
+                <small>Connect. Share. Chat.</small>
+            </div>
+        </div>
+
+        <div class="header-actions">
+
+            <button class="icon-btn" onclick="toggleDark()">
+                ☾
+            </button>
+
+            <button class="icon-btn">
+                🔔
+            </button>
+
+            <!-- PROFILE -->
+            <button class="profile-btn" onclick="openProfile()">
+                <img
+                    src="https://i.pravatar.cc/100?img=11"
+                    alt="Profile">
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- WELCOME -->
+    <section class="welcome">
+        <p>Welcome back 👋</p>
+        <h2>Good afternoon, Rapheal</h2>
+    </section>
+
+
+    <!-- SEARCH -->
+    <div class="search-box">
+        <span>⌕</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search chats, people and groups..."
+            onkeyup="searchChats()">
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+    <div class="quick-actions">
+
+        <div class="quick">
+            <div class="quick-icon">＋</div>
+            <span>New Chat</span>
+        </div>
+
+        <div class="quick">
+            <div class="quick-icon">♧</div>
+            <span>Contacts</span>
+        </div>
+
+        <div class="quick">
+            <div class="quick-icon">◉</div>
+            <span>Status</span>
+        </div>
+
+        <div class="quick">
+            <div class="quick-icon">☎</div>
+            <span>Calls</span>
+        </div>
+
+    </div>
+
+
+    <!-- STORIES -->
+    <section class="section">
+
+        <div class="section-title">
+            <h3>Status</h3>
+            <a href="#">See all</a>
+        </div>
+
+        <div class="stories">
+
+            <div class="story">
+                <div class="add-story">＋</div>
+                <div class="story-name">My Status</div>
+            </div>
+
+            <div class="story">
+                <div class="story-avatar">
+                    <img src="https://i.pravatar.cc/100?img=47">
+                </div>
+                <div class="story-name">Amara</div>
+            </div>
+
+            <div class="story">
+                <div class="story-avatar">
+                    <img src="https://i.pravatar.cc/100?img=12">
+                </div>
+                <div class="story-name">Daniel</div>
+            </div>
+
+            <div class="story">
+                <div class="story-avatar">
+                    <img src="https://i.pravatar.cc/100?img=32">
+                </div>
+                <div class="story-name">Sophia</div>
+            </div>
+
+            <div class="story">
+                <div class="story-avatar">
+                    <img src="https://i.pravatar.cc/100?img=15">
+                </div>
+                <div class="story-name">Michael</div>
+            </div>
+
+            <div class="story">
+                <div class="story-avatar">
+                    <img src="https://i.pravatar.cc/100?img=25">
+                </div>
+                <div class="story-name">Grace</div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- RECENT CHATS -->
+    <section class="section">
+
+        <div class="section-title">
+            <h3>Recent Chats</h3>
+            <a href="#">View all</a>
+        </div>
+
+        <div class="chat-list" id="chatList">
+
+            <div class="chat">
+
+                <div class="avatar-wrap">
+                    <img
+                        class="avatar"
+                        src="https://i.pravatar.cc/100?img=47">
+
+                    <span class="online"></span>
+                </div>
+
+                <div class="chat-info">
+
+                    <div class="chat-top">
+                        <span class="chat-name">Amara</span>
+                        <span class="chat-time">2:45 PM</span>
+                    </div>
+
+                    <div class="chat-message">
+                        Hey, how are you doing today?
+                    </div>
+
+                </div>
+
+                <span class="unread">2</span>
+
+            </div>
+
+
+            <div class="chat">
+
+                <div class="avatar-wrap">
+                    <img
+                        class="avatar"
+                        src="https://i.pravatar.cc/100?img=12">
+                </div>
+
+                <div class="chat-info">
+
+                    <div class="chat-top">
+                        <span class="chat-name">Daniel</span>
+                        <span class="chat-time">1:20 PM</span>
+                    </div>
+
+                    <div class="chat-message">
+                        The meeting has been moved to tomorrow.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="chat">
+
+                <div class="avatar-wrap">
+                    <img
+                        class="avatar"
+                        src="https://i.pravatar.cc/100?img=32">
+
+                    <span class="online"></span>
+                </div>
+
+                <div class="chat-info">
+
+                    <div class="chat-top">
+                        <span class="chat-name">Sophia</span>
+                        <span class="chat-time">12:48 PM</span>
+                    </div>
+
+                    <div class="chat-message">
+                        📷 Photo
+                    </div>
+
+                </div>
+
+                <span class="unread">5</span>
+
+            </div>
+
+
+            <div class="chat">
+
+                <div class="avatar-wrap">
+                    <img
+                        class="avatar"
+                        src="https://i.pravatar.cc/100?img=15">
+                </div>
+
+                <div class="chat-info">
+
+                    <div class="chat-top">
+                        <span class="chat-name">
+                            Chattera Developers
+                        </span>
+
+                        <span class="chat-time">
+                            Yesterday
+                        </span>
+                    </div>
+
+                    <div class="chat-message">
+                        Michael: The new update is ready.
+                    </div>
+
+                </div>
+
+                <span class="unread">8</span>
+
+            </div>
+
+
+            <div class="chat">
+
+                <div class="avatar-wrap">
+                    <img
+                        class="avatar"
+                        src="https://i.pravatar.cc/100?img=25">
+                </div>
+
+                <div class="chat-info">
+
+                    <div class="chat-top">
+                        <span class="chat-name">Grace</span>
+                        <span class="chat-time">Yesterday</span>
+                    </div>
+
+                    <div class="chat-message">
+                        Thank you 😊
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- FLOATING NEW CHAT BUTTON -->
+<button class="fab" onclick="newChat()">＋</button>
+
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav">
+
+    <div class="nav-item active">
+        <div class="nav-icon">⌂</div>
+        Home
+    </div>
+
+    <div class="nav-item">
+        <div class="nav-icon">◌</div>
+        Chats
+    </div>
+
+    <div class="nav-item">
+        <div class="nav-icon">◉</div>
+        Status
+    </div>
+
+    <div class="nav-item">
+        <div class="nav-icon">☎</div>
+        Calls
+    </div>
+
+    <div class="nav-item">
+        <div class="nav-icon">₦</div>
+        Wallet
+    </div>
+
+</nav>
+
+
+<script>
+
+/* DARK MODE */
+function toggleDark() {
+
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+
+        localStorage.setItem(
+            "chatteraTheme",
+            "dark"
+        );
+
+    } else {
+
+        localStorage.setItem(
+            "chatteraTheme",
+            "light"
+        );
+    }
+}
+
+
+/* LOAD SAVED THEME */
+if (
+    localStorage.getItem("chatteraTheme")
+    === "dark"
+) {
+    document.body.classList.add("dark");
+}
+
+
+/* PROFILE */
+function openProfile() {
+
+    alert("Profile — coming next");
+
+}
+
+
+/* NEW CHAT */
+function newChat() {
+
+    alert("New Chat — coming next");
+
+}
+
+
+/* SEARCH CHATS */
+function searchChats() {
+
+    const input =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const chats =
+        document.querySelectorAll(".chat");
+
+    chats.forEach(chat => {
+
+        const name =
+            chat
+            .querySelector(".chat-name")
+            .textContent
+            .toLowerCase();
+
+        const message =
+            chat
+            .querySelector(".chat-message")
+            .textContent
+            .toLowerCase();
+
+        if (
+            name.includes(input) ||
+            message.includes(input)
+        ) {
+
+            chat.style.display = "flex";
+
+        } else {
+
+            chat.style.display = "none";
+
+        }
+
+    });
+}
+
+</script>
+
+</body>
+</html>
