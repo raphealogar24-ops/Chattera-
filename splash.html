@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chattera</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+<script src="navigation.js"></script>
+body{
+    background:#0b141a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    overflow:hidden;
+}
+
+.container{
+    text-align:center;
+}
+
+.logo{
+    width:120px;
+    height:120px;
+    border-radius:30px;
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:auto;
+    box-shadow:0 0 40px rgba(37,211,102,0.4);
+}
+
+.logo span{
+    font-size:60px;
+}
+
+.title{
+    color:white;
+    font-size:40px;
+    margin-top:25px;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    color:#9ca3af;
+    margin-top:10px;
+}
+
+.loader{
+    width:220px;
+    height:6px;
+    background:#1f2937;
+    border-radius:20px;
+    margin:40px auto 0;
+    overflow:hidden;
+}
+
+.loader::before{
+    content:"";
+    display:block;
+    width:40%;
+    height:100%;
+    background:#25D366;
+    animation:loading 2s linear infinite;
+}
+
+@keyframes loading{
+    from{
+        transform:translateX(-100%);
+    }
+
+    to{
+        transform:translateX(600%);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <span>💬</span>
+    </div>
+
+    <h1 class="title">CHATTERA</h1>
+
+    <p class="subtitle">
+        Connect instantly with the world.
+    </p>
+
+    <div class="loader"></div>
+
+</div>
+
+<script>
+
+setTimeout(function () {
+    window.location.href = "login.html";
+}, 3000);
+
+</script>
+
+</body>
+</html>
